@@ -1,8 +1,8 @@
 const CACHE_NAME = "hello-pwa-cache-v1";
 const FILES_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/styles.css"
+  "./",
+  "./index.html",
+  "./styles.css"
 ];
 
 self.addEventListener("install", event => {
