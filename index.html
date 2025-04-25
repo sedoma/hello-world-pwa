@@ -7,6 +7,30 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
 <script>
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.createElement('button');
+    btn.innerText = 'Install App';
+    btn.style.position = 'fixed';
+    btn.style.bottom = '10px';
+    btn.style.left = '10px';
+    btn.onclick = () => {
+      btn.remove();
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+      });
+    };
+    document.body.appendChild(btn);
+  });
+</script>
+
+  <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./service-worker.js')
